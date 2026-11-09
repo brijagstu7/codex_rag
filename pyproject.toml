@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "codex-langchain-rag"
+version = "0.1.0"
+description = "A local LangChain RAG system powered by the authenticated Codex CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "David Garcia" }]
+dependencies = [
+  "langchain-core>=1.0,<2",
+  "langchain-text-splitters>=1.0,<2",
+  "faiss-cpu>=1.9,<2",
+  "numpy>=1.25,<3",
+  "pypdf>=5,<7",
+  "docx2txt>=0.8,<1",
+  "python-dotenv>=1.0,<2",
+  "typer>=0.15,<1",
+  "rich>=13.9,<15",
+]
+
+[project.optional-dependencies]
+semantic = [
+  "fastembed>=0.7,<1",
+]
+dev = [
+  "pytest>=8.3,<10",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+codex-rag = "codex_rag.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/codex_rag"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
